@@ -8,8 +8,8 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/drone/drone-runtime/engine"
-	"github.com/drone/drone-runtime/runtime"
+	"github.com/open-beagle/bdpulse-runtime/engine"
+	"github.com/open-beagle/bdpulse-runtime/runtime"
 )
 
 func TestWriteLine(t *testing.T) {

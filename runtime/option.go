@@ -14,7 +14,7 @@
 
 package runtime
 
-import "github.com/drone/drone-runtime/engine"
+import "github.com/open-beagle/bdpulse-runtime/engine"
 
 // Option configures a Runtime option.
 type Option func(*Runtime)

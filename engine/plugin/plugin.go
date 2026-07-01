@@ -9,7 +9,7 @@ package plugin
 import (
 	"errors"
 
-	"github.com/drone/drone-runtime/engine"
+	"github.com/open-beagle/bdpulse-runtime/engine"
 )
 
 // Symbol the symbol name used to lookup the plugin provider value.

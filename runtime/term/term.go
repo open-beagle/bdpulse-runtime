@@ -9,7 +9,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/drone/drone-runtime/runtime"
+	"github.com/open-beagle/bdpulse-runtime/runtime"
 )
 
 const (

@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/drone/drone-runtime/engine"
-	"github.com/drone/drone-runtime/engine/docker/auth"
+	"github.com/open-beagle/bdpulse-runtime/engine"
+	"github.com/open-beagle/bdpulse-runtime/engine/docker/auth"
 
 	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

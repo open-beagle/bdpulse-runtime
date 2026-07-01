@@ -14,13 +14,13 @@ import (
 
 	"github.com/mattn/go-isatty"
 
-	"github.com/drone/drone-runtime/engine"
-	"github.com/drone/drone-runtime/engine/docker"
-	"github.com/drone/drone-runtime/engine/docker/auth"
-	"github.com/drone/drone-runtime/engine/kube"
-	"github.com/drone/drone-runtime/runtime"
-	"github.com/drone/drone-runtime/runtime/term"
-	"github.com/drone/signal"
+	"github.com/open-beagle/bdpulse-runtime/engine"
+	"github.com/open-beagle/bdpulse-runtime/engine/docker"
+	"github.com/open-beagle/bdpulse-runtime/engine/docker/auth"
+	"github.com/open-beagle/bdpulse-runtime/engine/kube"
+	"github.com/open-beagle/bdpulse-runtime/runtime"
+	"github.com/open-beagle/bdpulse-runtime/runtime/term"
+	"github.com/open-beagle/bdpulse-commons/signal"
 )
 
 var tty = isatty.IsTerminal(os.Stdout.Fd())

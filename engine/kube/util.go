@@ -10,7 +10,7 @@ import (
 	"strings"
 	"strconv"
 
-	"github.com/drone/drone-runtime/engine"
+	"github.com/open-beagle/bdpulse-runtime/engine"
 
 	"k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"

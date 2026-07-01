@@ -19,7 +19,7 @@ import (
 	"bytes"
 	"time"
 
-	"github.com/drone/drone-runtime/engine"
+	"github.com/open-beagle/bdpulse-runtime/engine"
 )
 
 // helper function creates a tarfile that can be uploaded

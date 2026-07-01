@@ -22,9 +22,9 @@ import (
 	"io"
 	"io/ioutil"
 
-	"github.com/drone/drone-runtime/engine"
-	"github.com/drone/drone-runtime/engine/docker/auth"
-	"github.com/drone/drone-runtime/engine/docker/stdcopy"
+	"github.com/open-beagle/bdpulse-runtime/engine"
+	"github.com/open-beagle/bdpulse-runtime/engine/docker/auth"
+	"github.com/open-beagle/bdpulse-runtime/engine/docker/stdcopy"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/network"

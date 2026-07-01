@@ -10,7 +10,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/drone/drone-runtime/engine"
+	"github.com/open-beagle/bdpulse-runtime/engine"
 
 	"github.com/google/go-cmp/cmp"
 )
