@@ -137,6 +137,7 @@ func (e *dockerEngine) Create(ctx context.Context, spec *engine.Spec, step *engi
 		toConfig(spec, step),
 		toHostConfig(spec, step),
 		toNetConfig(spec, step),
+		nil,
 		step.Metadata.UID,
 	)
 
@@ -156,6 +157,7 @@ func (e *dockerEngine) Create(ctx context.Context, spec *engine.Spec, step *engi
 			toConfig(spec, step),
 			toHostConfig(spec, step),
 			toNetConfig(spec, step),
+			nil,
 			step.Metadata.UID,
 		)
 	}
