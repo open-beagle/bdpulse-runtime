@@ -44,6 +44,7 @@ type (
 		DependsOn    []string          `json:"depends_on,omitempty"`
 		Devices      []*VolumeDevice   `json:"devices,omitempty"`
 		Envs         map[string]string `json:"environment,omitempty"`
+		EnvOverrides map[string]bool   `json:"environment_overrides,omitempty"`
 		Files        []*FileMount      `json:"files,omitempty"`
 		IgnoreErr    bool              `json:"ignore_err,omitempty"`
 		IgnoreStdout bool              `json:"ignore_stderr,omitempty"`

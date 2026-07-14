@@ -20,8 +20,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/open-beagle/bdpulse-runtime/engine"
 	"github.com/natessilva/dag"
+	"github.com/open-beagle/bdpulse-runtime/engine"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -29,11 +29,12 @@ import (
 type Runtime struct {
 	mu sync.Mutex
 
-	engine engine.Engine
-	config *engine.Spec
-	hook   *Hook
-	start  int64
-	error  error
+	engine  engine.Engine
+	config  *engine.Spec
+	hook    *Hook
+	start   int64
+	error   error
+	outputs map[string]map[string]string
 }
 
 // New returns a new runtime using the specified runtime
@@ -64,6 +65,7 @@ func (r *Runtime) Resume(ctx context.Context, start int) error {
 
 	r.error = nil
 	r.start = time.Now().Unix()
+	r.outputs = make(map[string]map[string]string)
 
 	if r.hook.Before != nil {
 		state := snapshot(r, nil, nil)
@@ -166,8 +168,12 @@ func (r *Runtime) execAll(group []*engine.Step) <-chan error {
 	return done
 }
 
-func (r *Runtime) exec(step *engine.Step) error {
+func (r *Runtime) exec(original *engine.Step) error {
 	ctx := context.Background()
+	step, err := r.prepareStep(original)
+	if err != nil {
+		return err
+	}
 
 	switch {
 	case step.RunPolicy == engine.RunNever:
@@ -257,6 +263,12 @@ func (r *Runtime) exec(step *engine.Step) error {
 		err = &ExitError{
 			Name: step.Metadata.Name,
 			Code: wait.ExitCode,
+		}
+	}
+
+	if err == nil {
+		if err := r.collectEnvironment(ctx, step); err != nil {
+			return err
 		}
 	}
 

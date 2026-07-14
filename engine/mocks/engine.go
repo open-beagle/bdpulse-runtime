@@ -6,8 +6,8 @@ package mock_engine
 
 import (
 	context "context"
-	engine "github.com/open-beagle/bdpulse-runtime/engine"
 	gomock "github.com/golang/mock/gomock"
+	engine "github.com/open-beagle/bdpulse-runtime/engine"
 	io "io"
 	reflect "reflect"
 )
@@ -95,6 +95,19 @@ func (m *MockEngine) Tail(arg0 context.Context, arg1 *engine.Spec, arg2 *engine.
 // Tail indicates an expected call of Tail
 func (mr *MockEngineMockRecorder) Tail(arg0, arg1, arg2 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Tail", reflect.TypeOf((*MockEngine)(nil).Tail), arg0, arg1, arg2)
+}
+
+// ReadFile mocks base method
+func (m *MockEngine) ReadFile(arg0 context.Context, arg1 *engine.Spec, arg2 *engine.Step, arg3 string) ([]byte, error) {
+	ret := m.ctrl.Call(m, "ReadFile", arg0, arg1, arg2, arg3)
+	ret0, _ := ret[0].([]byte)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReadFile indicates an expected call of ReadFile
+func (mr *MockEngineMockRecorder) ReadFile(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReadFile", reflect.TypeOf((*MockEngine)(nil).ReadFile), arg0, arg1, arg2, arg3)
 }
 
 // Destroy mocks base method

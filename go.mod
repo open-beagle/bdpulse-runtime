@@ -10,7 +10,7 @@ require (
 	github.com/google/go-cmp v0.7.0
 	github.com/mattn/go-isatty v0.0.4
 	github.com/natessilva/dag v0.0.0-20180124060714-7194b8dcc5c4
-	github.com/open-beagle/bdpulse-commons v1.0.0
+	github.com/open-beagle/bdpulse-commons v1.1.0
 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
 	k8s.io/api v0.0.0-20181130031204-d04500c8c3dd
 	k8s.io/apimachinery v0.0.0-20181201231028-18a5ff3097b4

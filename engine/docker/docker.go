@@ -15,12 +15,14 @@
 package docker
 
 import (
+	"archive/tar"
 	"bytes"
 	"context"
 	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"strings"
 
 	"github.com/open-beagle/bdpulse-runtime/engine"
 	"github.com/open-beagle/bdpulse-runtime/engine/docker/auth"
@@ -100,6 +102,11 @@ func (e *dockerEngine) Setup(ctx context.Context, spec *engine.Spec) error {
 func (e *dockerEngine) Create(ctx context.Context, spec *engine.Spec, step *engine.Step) error {
 	if step.Docker == nil {
 		return errors.New("engine: missing docker configuration")
+	}
+	for _, secret := range step.Secrets {
+		if _, ok := engine.LookupSecret(spec, secret); !ok {
+			return fmt.Errorf("engine: missing secret %q for environment variable %q", secret.Name, secret.Env)
+		}
 	}
 
 	// parse the docker image name. We need to extract the
@@ -247,6 +254,27 @@ func (e *dockerEngine) Tail(ctx context.Context, spec *engine.Spec, step *engine
 		rc.Close()
 	}()
 	return rc, nil
+}
+
+func (e *dockerEngine) ReadFile(ctx context.Context, spec *engine.Spec, step *engine.Step, path string) ([]byte, error) {
+	rc, _, err := e.client.CopyFromContainer(ctx, step.Metadata.UID, path)
+	if err != nil {
+		if client.IsErrNotFound(err) || strings.Contains(strings.ToLower(err.Error()), "no such file") {
+			return nil, nil
+		}
+		return nil, err
+	}
+	defer rc.Close()
+
+	tr := tar.NewReader(io.LimitReader(rc, 64*1024+1024))
+	_, err = tr.Next()
+	if err == io.EOF {
+		return nil, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	return ioutil.ReadAll(io.LimitReader(tr, 64*1024+1))
 }
 
 func (e *dockerEngine) Destroy(ctx context.Context, spec *engine.Spec) error {

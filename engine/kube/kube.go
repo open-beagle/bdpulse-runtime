@@ -6,6 +6,7 @@ package kube
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"os"
 	"path/filepath"
@@ -124,6 +125,11 @@ func (e *kubeEngine) Create(_ context.Context, _ *engine.Spec, _ *engine.Step) e
 }
 
 func (e *kubeEngine) Start(ctx context.Context, spec *engine.Spec, step *engine.Step) error {
+	for _, secret := range step.Secrets {
+		if _, ok := engine.LookupSecret(spec, secret); !ok {
+			return fmt.Errorf("engine: missing secret %q for environment variable %q", secret.Name, secret.Env)
+		}
+	}
 	pod := toPod(spec, step)
 	if len(step.Docker.Ports) != 0 {
 		service := toService(spec, step)
@@ -242,6 +248,12 @@ func (e *kubeEngine) Tail(ctx context.Context, spec *engine.Spec, step *engine.S
 		SubResource("log").
 		VersionedParams(opts, scheme.ParameterCodec).
 		Stream()
+}
+
+func (e *kubeEngine) ReadFile(ctx context.Context, spec *engine.Spec, step *engine.Step, path string) ([]byte, error) {
+	// Kubernetes 的已终止业务容器不能执行读取命令。返回空结果以保持
+	// 现有命令步骤可运行；引用未发布动态变量的消费者仍会在启动前失败。
+	return nil, nil
 }
 
 func (e *kubeEngine) Destroy(ctx context.Context, spec *engine.Spec) error {
